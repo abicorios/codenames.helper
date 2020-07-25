@@ -126,11 +126,15 @@
         }
     }
     const import_colors = (str_colors="") => {
+        const cells = Array.from(document.querySelectorAll("td"));
+        if(cells.length < max_count_of_words) {
+            alert(`На поле должно быть ${max_count_of_words} слов, а сейчас ${cells.length}. Добавьте недостающие слова.`);
+            return;
+        }
         const do_import = confirm("Нынешняя расстановка цветов поменяется. Точно продолжить?");
         if(!do_import) {
             return;
         }
-        const cells = Array.from(document.querySelectorAll("td"));
         let input_colors;
         if(str_colors.length) {
             input_colors = str_colors;
