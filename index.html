@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Codenames White Board</title>
+    <script src="lodash.min.js"></script>
+    <style>
+        table {
+            border-spacing: 8px;
+        }
+
+        td {
+            background-color: #ccc;
+            padding: 5px;
+            font-size: 250%;
+            text-align: center;
+        }
+
+        textarea {
+            width: 500px;
+            height: 200px;
+        }
+
+        div {
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>Автоматическое форматирование перечня слов</h3>
+    <p>Слова:</p>
+    <textarea id="words_input"></textarea>
+    <p>Разделители: <input id="separators" type="text" value=" ," title="перечень всех разрешенных альтернативных
+        разделителей слов, например пробел и запятая, значит без разницы пробелами или запятыми разделять"></p>
+    <p>Перемешать: <input id="shuffle" type="checkbox" checked></p>
+    <p id="table"></p>
+    <p><textarea id="words_list" disabled></textarea></p>
+</div>
+<script>
+    const max_count_of_words = 5 * 5;
+    let table_start = `<table>`;
+    let table_end = `</table>`;
+    const make_table = () => {
+        let input = document.getElementById("words_input").value;
+        let split_symbols = document.getElementById("separators").value;
+        let splitter = new RegExp(`[\\n${split_symbols}]+`);
+        console.log(splitter);
+        let ar_input = input.split(splitter);
+        ar_input = _.compact(ar_input);
+        if (document.getElementById("shuffle").checked) {
+            ar_input = _.shuffle(ar_input);
+        }
+        if (ar_input.length > max_count_of_words) {
+            ar_input = _.slice(ar_input, 0, max_count_of_words);
+        }
+        console.log(ar_input);
+        let matrix_words = _.chunk(ar_input, 5)
+        console.log(matrix_words);
+        let table_middle = "";
+        matrix_words.forEach(row => {
+            table_middle += "<tr>";
+            row.forEach(item => {
+                item = _.trim(item);
+                table_middle += `<td>${item}</td>`;
+            });
+            table_middle += "</tr>";
+        });
+        let table = table_start + table_middle + table_end;
+        document.getElementById("table").innerHTML = table;
+        let words_list = matrix_words.map(row=>row.join(", ")).join(",\n");
+        document.getElementById("words_list").value = words_list;
+
+    }
+    document.getElementById("words_input").addEventListener("keyup", make_table);
+    document.getElementById("separators").addEventListener("keyup", make_table);
+    document.getElementById("shuffle").addEventListener("change", make_table);
+</script>
+</body>
+</html>
