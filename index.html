@@ -41,11 +41,10 @@
 <div>
     <h3>Автоматическое форматирование перечня слов для игры Codenames</h3>
     <p>Добавьте перечень слов:</p>
-    <textarea id="words_input"></textarea>
-    <p>Разделители: <input id="separators" type="text" value=" ,"
-       title="перечень всех разрешенных альтернативных разделителей слов, например пробел и запятая, значит без разницы пробелами или запятыми разделять">
+    <textarea id="words_input" class="input"></textarea>
+    <p>Разделители: <input id="separators" type="text" value=" ," class="input" title="перечень всех разрешенных альтернативных разделителей слов, например пробел и запятая, значит без разницы пробелами или запятыми разделять">
     </p>
-    <p>Перемешать: <input id="shuffle" type="checkbox" checked></p>
+    <p>Перемешать: <input id="shuffle" type="checkbox" class="input" checked></p>
     <p>Заметки: <input id="show_notes" type="checkbox"></p>
     <p id="table"></p>
     <p><textarea id="words_list" disabled class="output"></textarea></p>
@@ -55,7 +54,7 @@
     const max_count_of_words = 5 * 5;
     const table_start = `<table>`;
     const table_end = `</table>`;
-    const note = `<p style="margin: 0;" class="note"><input type="text" style="width: 1px;"></p>`;
+    const note = `<p style="margin: 0;" class="note"><input type="text" class="protect" style="width: 1px;"></p>`;
     const check_notes = () => {
         if (document.querySelector("#show_notes").checked) {
             Array.from(document.querySelectorAll(".note")).forEach(this_note => {
@@ -107,6 +106,22 @@
             td.querySelector("input").style.width = td.offsetWidth - 20 + "px";
         });
         check_notes();
+        Array.from(document.querySelectorAll(".protect")).forEach(inp => {
+            inp.addEventListener("keyup", function () {
+                console.log(this);
+                if (this.value.length) {
+                    Array.from(document.querySelectorAll(".input")).forEach(this_input => {
+                        console.log(this_input);
+                        this_input.disabled = true;
+                    })
+                } else {
+                    Array.from(document.querySelectorAll(".input")).forEach(this_input => {
+                        console.log(this_input);
+                        this_input.disabled = false;
+                    })
+                }
+            })
+        })
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
