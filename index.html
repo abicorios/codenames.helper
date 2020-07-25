@@ -127,11 +127,11 @@
     const import_colors = () => {
         const cells = Array.from(document.querySelectorAll("td"));
         const input_colors = prompt("Введите строку букв цветов (w - белый, r - красный, b - синий, d - черный)","");
-        if(!input_colors) {
+        if(typeof input_colors === "string" && !input_colors.length) {
+            alert("Строка импорта цветов не должна быть пустой.");
             return;
         }
-        if(!input_colors.length) {
-            alert("Строка импорта цветов не должна быть пустой.");
+        if(!input_colors) {
             return;
         }
         if(!cells.length) {
