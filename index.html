@@ -47,7 +47,6 @@
         let input = document.getElementById("words_input").value;
         let split_symbols = document.getElementById("separators").value;
         let splitter = new RegExp(`[\\n${split_symbols}]+`);
-        console.log(splitter);
         let ar_input = input.split(splitter);
         ar_input = _.compact(ar_input);
         if (document.getElementById("shuffle").checked) {
@@ -56,9 +55,7 @@
         if (ar_input.length > max_count_of_words) {
             ar_input = _.slice(ar_input, 0, max_count_of_words);
         }
-        console.log(ar_input);
         let matrix_words = _.chunk(ar_input, 5)
-        console.log(matrix_words);
         let table_middle = "";
         matrix_words.forEach(row => {
             table_middle += "<tr>";
@@ -72,7 +69,6 @@
         document.getElementById("table").innerHTML = table;
         let words_list = matrix_words.map(row=>row.join(", ")).join(",\n");
         document.getElementById("words_list").value = words_list;
-
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
