@@ -43,6 +43,9 @@
         td:hover .color.show {
             display: inline-block;
         }
+        .export_colors {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -57,12 +60,29 @@
     <p>Показывать переключатель цвета при наведении курсора на слово: <input id="show_color_selector" type="checkbox"></p>
     <p id="table"></p>
     <p><textarea id="words_list" disabled class="output"></textarea></p>
+    <p class="export_colors">Экспорт цветов: <input id="export_colors" type="text" disabled></p>
     <p><a href="https://github.com/abicorios/codenames.helper">Исходный код</a></p>
 </div>
 <script>
     const max_count_of_words = 5 * 5;
     const table_start = `<table>`;
     const table_end = `</table>`;
+    const color_to_letter = {
+        "#ccc":"w",
+        "":"w",
+        "rgb(204, 204, 204)":"w",
+        "#f55":"r",
+        "rgb(255, 85, 85)":"r",
+        "#49f":"b",
+        "rgb(68, 153, 255)":"b",
+        "black":"d"
+    }
+    const letter_to_color = {
+        "w":"#ccc",
+        "r":"#f55",
+        "b":"#49f",
+        "d":"black"
+    }
     const note = `<p style="margin: 0;" class="note"><input type="text" class="protect" style="width: 1px;"></p>`;
     const colors = `<p style="margin: 0"></p>
 <div class="color" style="background-color: #ccc;"></div>
@@ -89,6 +109,19 @@
                 item.classList.remove("show");
             }
         })
+    }
+    const export_colors = () => {
+        let colors = "";
+        Array.from(document.querySelectorAll("td")).forEach(td => {
+            colors += color_to_letter[td.style.backgroundColor];
+        });
+        document.querySelector("#export_colors").value = colors;
+        document.querySelector("#export_colors").style.width = ((colors.length + 1) * 10) + "px";
+        if(colors.length) {
+            document.querySelector(".export_colors").style.display = "block";
+        } else {
+            document.querySelector(".export_colors").style.display = "none";
+        }
     }
     const make_table = () => {
         const input = document.getElementById("words_input").value;
@@ -151,9 +184,11 @@
                 } else {
                     this.parentElement.style.color = "black";
                 }
+                export_colors();
             })
         })
         show_colors();
+        export_colors();
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
