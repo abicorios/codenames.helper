@@ -68,6 +68,7 @@
         let table = table_start + table_middle + table_end;
         document.getElementById("table").innerHTML = table;
         let words_list = matrix_words.map(row=>row.join(", ")).join(",\n");
+        words_list = words_list.replace(/,,+/g,",");
         document.getElementById("words_list").value = words_list;
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
