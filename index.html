@@ -75,7 +75,10 @@
         document.getElementById("table").innerHTML = table;
         let words_list = matrix_words.map(row => row.join(", ")).join(",\n");
         words_list = words_list.replace(/,,+/g, ",");
-        document.getElementById("words_list").value = words_list;
+        const output = document.getElementById("words_list");
+        output.value = words_list;
+        output.style.height = 'auto';
+        output.style.height = output.scrollHeight+"px";
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
