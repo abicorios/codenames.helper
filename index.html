@@ -108,15 +108,12 @@
         check_notes();
         Array.from(document.querySelectorAll(".protect")).forEach(inp => {
             inp.addEventListener("keyup", function () {
-                console.log(this);
                 if (this.value.length) {
                     Array.from(document.querySelectorAll(".input")).forEach(this_input => {
-                        console.log(this_input);
                         this_input.disabled = true;
                     })
                 } else {
                     Array.from(document.querySelectorAll(".input")).forEach(this_input => {
-                        console.log(this_input);
                         this_input.disabled = false;
                     })
                 }
