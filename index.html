@@ -124,13 +124,18 @@
             document.querySelector(".export_colors").style.display = "none";
         }
     }
-    const import_colors = () => {
+    const import_colors = (str_colors="") => {
         const do_import = confirm("Импорт поменяет нынешнюю расстановку цветов. Точно продолжить?");
         if(!do_import) {
             return;
         }
         const cells = Array.from(document.querySelectorAll("td"));
-        const input_colors = prompt("Введите строку букв цветов (w - белый, r - красный, b - синий, d - черный)","");
+        let input_colors;
+        if(str_colors.length) {
+            input_colors = str_colors;
+        } else {
+            input_colors = prompt("Введите строку букв цветов (w - белый, r - красный, b - синий, d - черный)", "");
+        }
         if(typeof input_colors === "string" && !input_colors.length) {
             alert("Строка импорта цветов не должна быть пустой.");
             return;
