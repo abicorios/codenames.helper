@@ -61,6 +61,7 @@
             table_middle += "<tr>";
             row.forEach(item => {
                 item = _.trim(item);
+                item = item.replace(/,/g, "");
                 table_middle += `<td>${item}</td>`;
             });
             table_middle += "</tr>";
