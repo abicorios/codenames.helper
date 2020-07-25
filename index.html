@@ -41,12 +41,12 @@
 </div>
 <script>
     const max_count_of_words = 5 * 5;
-    let table_start = `<table>`;
-    let table_end = `</table>`;
+    const table_start = `<table>`;
+    const table_end = `</table>`;
     const make_table = () => {
-        let input = document.getElementById("words_input").value;
-        let split_symbols = document.getElementById("separators").value;
-        let splitter = new RegExp(`[\\n${split_symbols}]+`);
+        const input = document.getElementById("words_input").value;
+        const split_symbols = document.getElementById("separators").value;
+        const splitter = new RegExp(`[\\n${split_symbols}]+`);
         let ar_input = input.split(splitter);
         ar_input = _.compact(ar_input);
         if (document.getElementById("shuffle").checked) {
@@ -55,7 +55,7 @@
         if (ar_input.length > max_count_of_words) {
             ar_input = _.slice(ar_input, 0, max_count_of_words);
         }
-        let matrix_words = _.chunk(ar_input, 5)
+        const matrix_words = _.chunk(ar_input, 5)
         let table_middle = "";
         matrix_words.forEach(row => {
             table_middle += "<tr>";
@@ -66,7 +66,7 @@
             });
             table_middle += "</tr>";
         });
-        let table = table_start + table_middle + table_end;
+        const table = table_start + table_middle + table_end;
         document.getElementById("table").innerHTML = table;
         let words_list = matrix_words.map(row => row.join(", ")).join(",\n");
         words_list = words_list.replace(/,,+/g, ",");
