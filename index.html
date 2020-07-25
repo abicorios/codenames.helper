@@ -61,6 +61,7 @@
     <p id="table"></p>
     <p><textarea id="words_list" disabled class="output"></textarea></p>
     <p class="export_colors">Экспорт цветов: <input id="export_colors" type="text" disabled></p>
+    <p><button id="import_colors">Импорт цветов</button></p>
     <p><a href="https://github.com/abicorios/codenames.helper">Исходный код</a></p>
 </div>
 <script>
@@ -122,6 +123,34 @@
         } else {
             document.querySelector(".export_colors").style.display = "none";
         }
+    }
+    const import_colors = () => {
+        const cells = Array.from(document.querySelectorAll("td"));
+        const input_colors = prompt("Введите строку букв цветов (w - белый, r - красный, b - синий, d - черный)","");
+        let bad_letter = input_colors.match(/[^wrbd]/);
+        if(bad_letter) {
+            if(bad_letter[0] === " ") {
+                bad_letter = "пробел";
+            } else {
+                bad_letter = bad_letter[0];
+            }
+            alert(`Символ ${bad_letter} не нужно использовать.`);
+            return;
+        }
+        const max_length = Math.max(cells.length,input_colors.length);
+        for(let i = 0; i < max_length; ++i) {
+            let this_color = letter_to_color[input_colors[i]];
+            cells[i].style.backgroundColor = this_color;
+            if(this_color === "black") {
+                cells[i].style.color = "white";
+            } else {
+                cells[i].style.color = "black";
+            }
+        }
+        export_colors();
+        Array.from(document.querySelectorAll(".input")).forEach(this_input => {
+            this_input.disabled = true;
+        })
     }
     const make_table = () => {
         const input = document.getElementById("words_input").value;
@@ -195,6 +224,7 @@
     document.getElementById("shuffle").addEventListener("change", make_table);
     document.querySelector("#show_notes").addEventListener("change", check_notes);
     document.querySelector("#show_color_selector").addEventListener("change",show_colors);
+    document.querySelector("#import_colors").addEventListener("click",import_colors);
 </script>
 </body>
 </html>
