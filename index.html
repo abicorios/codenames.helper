@@ -127,6 +127,14 @@
     const import_colors = () => {
         const cells = Array.from(document.querySelectorAll("td"));
         const input_colors = prompt("Введите строку букв цветов (w - белый, r - красный, b - синий, d - черный)","");
+        if(!input_colors.length) {
+            alert("Строка импорта цветов не должна быть пустой.");
+            return;
+        }
+        if(!cells.length) {
+            alert("Список слов не должен быть пустым");
+            return;
+        }
         let bad_letter = input_colors.match(/[^wrbd]/);
         if(bad_letter) {
             if(bad_letter[0] === " ") {
@@ -137,8 +145,8 @@
             alert(`Символ ${bad_letter} не нужно использовать.`);
             return;
         }
-        const max_length = Math.max(cells.length,input_colors.length);
-        for(let i = 0; i < max_length; ++i) {
+        const min_length = Math.min(cells.length,input_colors.length);
+        for(let i = 0; i < min_length; ++i) {
             let this_color = letter_to_color[input_colors[i]];
             cells[i].style.backgroundColor = this_color;
             if(this_color === "black") {
