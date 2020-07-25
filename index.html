@@ -62,6 +62,7 @@
     <p><textarea id="words_list" disabled class="output"></textarea></p>
     <p class="export_colors">Экспорт цветов: <input id="export_colors" type="text" disabled></p>
     <p><button id="import_colors">Импорт цветов</button></p>
+    <p><button id="paint">Выполнить случайную раскраску поля</button></p>
     <p style="margin-top: 50px;"><a href="https://github.com/abicorios/codenames.helper" target="_blank">Исходный код</a></p>
 </div>
 <script>
@@ -172,6 +173,19 @@
             this_input.disabled = true;
         })
     }
+    const paint = () => {
+        const n_red = 9;
+        const n_blue = 8;
+        const n_black = 1;
+        const n_fields =  max_count_of_words;
+        const red = "r".repeat(n_red);
+        const blue = "b".repeat(n_blue);
+        const black = "d".repeat(n_black);
+        const white = "w".repeat(n_fields - n_red - n_blue - n_black);
+        let field = red + blue + black + white;
+        field = _.shuffle(field).join("");
+        import_colors(field);
+    }
     const make_table = () => {
         const input = document.getElementById("words_input").value;
         const split_symbols = document.getElementById("separators").value;
@@ -245,6 +259,7 @@
     document.querySelector("#show_notes").addEventListener("change", check_notes);
     document.querySelector("#show_color_selector").addEventListener("change",show_colors);
     document.querySelector("#import_colors").addEventListener("click",import_colors);
+    document.querySelector("#paint").addEventListener("click",paint);
 </script>
 </body>
 </html>
