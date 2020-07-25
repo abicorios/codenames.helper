@@ -30,6 +30,11 @@
             height: auto;
             display: none;
         }
+
+        .note {
+            display: none;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -40,6 +45,7 @@
     <p>Разделители: <input id="separators" type="text" value=" ," title="перечень всех разрешенных альтернативных
         разделителей слов, например пробел и запятая, значит без разницы пробелами или запятыми разделять"></p>
     <p>Перемешать: <input id="shuffle" type="checkbox" checked></p>
+    <p>Заметки: <input id="show_notes" type="checkbox"></p>
     <p id="table"></p>
     <p><textarea id="words_list" disabled class="output"></textarea></p>
     <p><a href="https://github.com/abicorios/codenames.helper">Исходный код</a></p>
@@ -48,6 +54,18 @@
     const max_count_of_words = 5 * 5;
     const table_start = `<table>`;
     const table_end = `</table>`;
+    const note = `<p style="margin: 0;" class="note"><input type="text" style="width: 1px;"></p>`;
+    const check_notes = () => {
+        if(document.querySelector("#show_notes").checked) {
+            Array.from(document.querySelectorAll(".note")).forEach(this_note => {
+                this_note.style.display = "block";
+            })
+        } else {
+            Array.from(document.querySelectorAll(".note")).forEach(this_note => {
+                this_note.style.display = "none";
+            })
+        }
+    }
     const make_table = () => {
         const input = document.getElementById("words_input").value;
         const split_symbols = document.getElementById("separators").value;
@@ -67,7 +85,7 @@
             row.forEach(item => {
                 item = _.trim(item);
                 item = item.replace(/,/g, "");
-                table_middle += `<td>${item}</td>`;
+                table_middle += `<td>${item}${note}</td>`;
             });
             table_middle += "</tr>";
         });
@@ -84,10 +102,15 @@
         output.value = words_list;
         output.style.height = 'auto';
         output.style.height = output.scrollHeight+"px";
+        Array.from(document.getElementsByTagName("td")).forEach(td => {
+            td.querySelector("input").style.width = td.offsetWidth - 20 + "px";
+        });
+        check_notes();
     }
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
     document.getElementById("shuffle").addEventListener("change", make_table);
+    document.querySelector("#show_notes").addEventListener("change",check_notes);
 </script>
 </body>
 </html>
