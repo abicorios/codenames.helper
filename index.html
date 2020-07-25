@@ -57,7 +57,7 @@
     const table_end = `</table>`;
     const note = `<p style="margin: 0;" class="note"><input type="text" style="width: 1px;"></p>`;
     const check_notes = () => {
-        if(document.querySelector("#show_notes").checked) {
+        if (document.querySelector("#show_notes").checked) {
             Array.from(document.querySelectorAll(".note")).forEach(this_note => {
                 this_note.style.display = "block";
             })
@@ -95,14 +95,14 @@
         let words_list = matrix_words.map(row => row.join(", ")).join(",\n");
         words_list = words_list.replace(/,,+/g, ",");
         const output = document.getElementById("words_list");
-        if(ar_input.length) {
+        if (ar_input.length) {
             output.style.display = "block";
         } else {
             output.style.display = "none";
         }
         output.value = words_list;
         output.style.height = 'auto';
-        output.style.height = output.scrollHeight+"px";
+        output.style.height = output.scrollHeight + "px";
         Array.from(document.getElementsByTagName("td")).forEach(td => {
             td.querySelector("input").style.width = td.offsetWidth - 20 + "px";
         });
@@ -111,7 +111,7 @@
     document.getElementById("words_input").addEventListener("keyup", make_table);
     document.getElementById("separators").addEventListener("keyup", make_table);
     document.getElementById("shuffle").addEventListener("change", make_table);
-    document.querySelector("#show_notes").addEventListener("change",check_notes);
+    document.querySelector("#show_notes").addEventListener("change", check_notes);
 </script>
 </body>
 </html>
