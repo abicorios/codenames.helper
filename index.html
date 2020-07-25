@@ -29,6 +29,7 @@
         .output {
             width: auto;
             height: auto;
+            display: none;
         }
     </style>
 </head>
@@ -76,6 +77,11 @@
         let words_list = matrix_words.map(row => row.join(", ")).join(",\n");
         words_list = words_list.replace(/,,+/g, ",");
         const output = document.getElementById("words_list");
+        if(ar_input.length) {
+            output.style.display = "block";
+        } else {
+            output.style.display = "none";
+        }
         output.value = words_list;
         output.style.height = 'auto';
         output.style.height = output.scrollHeight+"px";
